@@ -12,7 +12,8 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --write src/",
     "prettier:check": "npx prettier --check src/",
-    "test:unit": "cross-env ENV=test jest"
+    "test:unit": "cross-env ENV=test jest",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
