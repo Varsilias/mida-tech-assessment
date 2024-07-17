@@ -102,11 +102,8 @@ export class EnvConfig {
     return Number(this.config.DB_PORT);
   }
 
-  // We could also make the host an Environment Variable
   get DB_URL(): string {
-    return this.inProduction
-      ? this.config.DB_URL
-      : `mongodb://${this.config.DB_USER}:${this.config.DB_PASSWORD}@mongo:${this.config.DB_PORT}/${this.config.DB_NAME}?authSource=admin`;
+    return this.inProduction ? this.config.DB_URL : "";
   }
   get JWT_ACCESS_TOKEN_SECRET(): string {
     return this.config.JWT_ACCESS_TOKEN_SECRET;

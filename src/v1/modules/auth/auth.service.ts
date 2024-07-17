@@ -5,11 +5,6 @@ import { UserEntity } from "./_user/user.entity";
 import crypto from "crypto";
 import * as UtilService from "./utils.service";
 import * as JwtService from "./jwt.service";
-import { JwtPayload } from "jsonwebtoken";
-
-interface IJwtPayload extends JwtPayload {
-  [key: string]: any;
-}
 
 export const findUserById = async (id: number) => {
   const user = await UserRepository.findOneBy({ id });
@@ -17,12 +12,22 @@ export const findUserById = async (id: number) => {
 };
 
 export const signUp = async (payload: ISignUpDto) => {
-  const { email, password } = payload;
+  const { email, password, username } = payload;
 
-  const userExists = await UserRepository.findOne({ where: { email } });
+  let userExists = await UserRepository.findOne({ where: { email } });
 
   if (userExists) {
     return { status: false, message: "Email already in use.", statusCode: HttpStatus.BAD_REQUEST };
+  }
+
+  userExists = await UserRepository.findOne({ where: { username } });
+
+  if (userExists) {
+    return {
+      status: false,
+      message: "Username already in use.",
+      statusCode: HttpStatus.BAD_REQUEST,
+    };
   }
 
   const salt = crypto.randomBytes(16).toString("hex");

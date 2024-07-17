@@ -13,4 +13,9 @@ productRouter.post(
   ProductController.createProduct,
 );
 
-productRouter.get("/", authCheck, ProductController.getProducts);
+productRouter.get(
+  "/",
+  authCheck,
+  validateRequest(REQUEST_FIELD.QUERY, schema.PaginationSchema),
+  ProductController.getProducts,
+);

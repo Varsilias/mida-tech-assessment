@@ -46,7 +46,7 @@ export class BaseEntity<T = any> {
     nullable: true,
     comment: "Entity Deleted At",
   })
-  deleted_at!: Date;
+  deleted_at!: Date | null;
 
   constructor(partial: Partial<T>) {
     Object.assign(this, partial);

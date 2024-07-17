@@ -21,3 +21,20 @@ export const CreateProductSchema = z
       .min(1, "Product price cannot be below 1"),
   })
   .strict({ message: "Invalid field in body" });
+
+export const PaginationSchema = z
+  .object({
+    page: z.coerce
+      .number({
+        required_error: "Page is required",
+        invalid_type_error: "Page must be an integer",
+      })
+      .positive({ message: `Page must be a positive integer` }),
+    perPage: z.coerce
+      .number({
+        required_error: "PerPage is required",
+        invalid_type_error: "PerPage number must be an integer",
+      })
+      .positive({ message: `PerPage must be a positive integer` }),
+  })
+  .strict({ message: "Invalid field in query parameters" });

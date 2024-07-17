@@ -1,7 +1,7 @@
 import { logger } from "../../../config/logger.config";
 import { HttpStatus } from "../../../enums";
 import { Request, Response } from "express";
-import { IProductDto } from "./types";
+import { IGetProductsDto, IProductDto } from "./types";
 import * as ProductService from "./product.service";
 
 export const createProduct = async (req: Request, res: Response) => {
@@ -20,7 +20,9 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { status, message, data, statusCode } = await ProductService.getProducts();
+    const payload = { ...req.query } as unknown as IGetProductsDto;
+
+    const { status, message, data, statusCode } = await ProductService.getProducts(payload);
     return res.status(statusCode).json({ status, message, data });
   } catch (error: any) {
     logger.error(

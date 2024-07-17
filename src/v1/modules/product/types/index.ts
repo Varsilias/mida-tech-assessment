@@ -3,3 +3,8 @@ export interface IProductDto {
   product_description: string;
   product_price: number;
 }
+
+export interface IGetProductsDto {
+  page: number;
+  perPage: number;
+}

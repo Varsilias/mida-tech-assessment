@@ -1,6 +1,6 @@
 import { HttpStatus } from "../../../enums";
 import { ProductRepository } from "./repositories/product.repository";
-import { IProductDto } from "./types";
+import { IGetProductsDto, IProductDto } from "./types";
 
 export const createNewProduct = async (payload: IProductDto) => {
   const productExists = await ProductRepository.findOne({
@@ -25,8 +25,14 @@ export const createNewProduct = async (payload: IProductDto) => {
   };
 };
 
-export const getProducts = async () => {
-  const products = await ProductRepository.find({});
+export const getProducts = async (payload: IGetProductsDto) => {
+  let { page, perPage } = payload;
+
+  page = page * 1 || 1;
+  perPage = perPage * 1 || 10;
+
+  const skip = (page - 1) * perPage;
+  const products = await ProductRepository.getPaginated(page, perPage, skip);
 
   return {
     status: true,

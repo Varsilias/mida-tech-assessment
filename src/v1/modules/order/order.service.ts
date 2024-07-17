@@ -31,6 +31,17 @@ export const createNewOrder = async (payload: IOrderDto) => {
     };
   }
 
+  const orderExists = await OrderRepository.findOne({
+    where: { user_id: { id: payload.user_id }, product_id: { id: payload.product_id } },
+  });
+
+  if (orderExists) {
+    return {
+      status: false,
+      message: "Order already exists", // We can be less explicit if there is need
+      statusCode: HttpStatus.CONFLICT,
+    };
+  }
   const entity = OrderRepository.create({ user_id: userExists, product_id: productExists });
   const order = await OrderRepository.save(entity);
 
