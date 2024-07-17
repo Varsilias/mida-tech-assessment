@@ -1,10 +1,13 @@
 import express, { NextFunction, Request, Response } from "express";
 import { HttpStatus } from "./enums";
 import { logger } from "./config/logger.config";
+import { v1Routes } from "./v1/route-index";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { connect } from "./database/sql";
 
 const app = express();
+connect();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ limit: "15mb", extended: true }));
@@ -17,6 +20,8 @@ app.get("/health-check", (req, res) => {
     message: "All Systems Up",
   });
 });
+
+app.use("/api/v1", v1Routes);
 
 // eslint-disable-next-line  @typescript-eslint/no-unused-vars
 app.use(async (error: any, __: Request, res: Response, _: NextFunction) => {
