@@ -1,6 +1,6 @@
 import { Router, Response } from "express";
 import { authCheck, validateRequest } from "./middlewares";
-import * as schema from "./validator-schemas";
+import * as schema from "./schema-validators";
 import { HttpStatus, REQUEST_FIELD } from "../../../enums/";
 import * as AuthController from "./auth.controller";
 import { IRequest } from "src/types/custom";

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authRouter } from "./modules/auth/auth.route";
 import { logger } from "../config/logger.config";
+import { productRouter } from "./modules/product/product.route";
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use((req, res, next) => {
 });
 
 router.use("/auth", authRouter);
+router.use("/products", productRouter);
 
 export const v1Routes = router;
