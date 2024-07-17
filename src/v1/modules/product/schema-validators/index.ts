@@ -18,6 +18,6 @@ export const CreateProductSchema = z
         invalid_type_error: "Product price must be a number",
       })
       .positive("Product price must be a positive integer")
-      .min(1, "You can not charge below 1"),
+      .min(1, "Product price cannot be below 1"),
   })
   .strict({ message: "Invalid field in body" });
